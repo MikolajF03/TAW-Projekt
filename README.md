@@ -32,3 +32,7 @@ ___
   - Obsługa sesji / tokenów (np. JWT)
   - Zabezpieczone endpointy backendu
   - Ograniczony dostęp do wybranych funkcjonalności dla niezalogowanych użytkowników
+
+___
+## Link do repozytorium:
+https://github.com/MikolajF03/TAW-Projekt.git
