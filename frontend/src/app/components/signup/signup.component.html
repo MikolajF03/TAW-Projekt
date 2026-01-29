@@ -1,0 +1,71 @@
+<section class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4 shadow-sm">
+        <h2 class="mb-4">Rejestracja</h2>
+        
+        <form [formGroup]="signupForm" (ngSubmit)="create()" autocomplete="off">
+          
+          <div class="mb-3">
+            <label class="form-label">Email <span class="text-danger">*</span></label>
+            <input 
+              type="email" 
+              formControlName="email"
+              class="form-control" 
+              [class.is-invalid]="f['email'].touched && f['email'].invalid"
+              placeholder="Wpisz email">
+            
+            @if (f['email'].touched && f['email'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['email'].errors?.['required']) { Email jest wymagany. }
+                @if (f['email'].errors?.['email']) { Wprowadź poprawny adres e-mail. }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hasło <span class="text-danger">*</span></label>
+            <input 
+              type="password" 
+              formControlName="password"
+              class="form-control" 
+              [class.is-invalid]="f['password'].touched && f['password'].invalid"
+              placeholder="Wpisz hasło (5-15 znaków)">
+            
+            @if (f['password'].touched && f['password'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['password'].errors?.['required']) { Hasło jest wymagane. }
+                @if (f['password'].errors?.['minlength']) { Hasło musi mieć minimum 5 znaków. }
+                @if (f['password'].errors?.['maxlength']) { Hasło może mieć maksimum 15 znaków. }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Imię <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              formControlName="name"
+              class="form-control" 
+              [class.is-invalid]="f['name'].touched && f['name'].invalid"
+              placeholder="Wpisz imię">
+            
+            @if (f['name'].touched && f['name'].invalid) {
+              <div class="invalid-feedback">
+                Imię jest wymagane.
+              </div>
+            }
+          </div>
+
+          <button 
+            [disabled]="signupForm.invalid" 
+            class="btn btn-primary w-100" 
+            type="submit">
+            Zarejestruj się
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

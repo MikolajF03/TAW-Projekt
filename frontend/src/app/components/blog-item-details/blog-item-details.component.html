@@ -1,0 +1,97 @@
+<div class="container mt-4">
+  <div class="card shadow border-0 overflow-hidden">
+    
+    @if (post) {
+      @if (isEditMode) {
+        <div class="card-body p-4">
+          <h3 class="mb-4 text-primary">Edytuj post</h3>
+          
+          <form [formGroup]="editForm" (ngSubmit)="saveEdit()">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Tytuł</label>
+              <input type="text" formControlName="title" class="form-control"
+                     [class.is-invalid]="f['title'].touched && f['title'].invalid">
+              <div class="invalid-feedback">Tytuł jest wymagany (min. 3 znaki).</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">URL Obrazka</label>
+              <input type="text" formControlName="image" class="form-control"
+                     [class.is-invalid]="f['image'].touched && f['image'].invalid">
+              <div class="invalid-feedback">Podaj poprawny link (zaczynający się od http/https).</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Treść</label>
+              <textarea formControlName="text" class="form-control" rows="8"
+                        [class.is-invalid]="f['text'].touched && f['text'].invalid"></textarea>
+              <div class="invalid-feedback">Treść musi mieć co najmniej 10 znaków.</div>
+            </div>
+
+            <div class="mt-4">
+              <button type="submit" [disabled]="editForm.invalid" class="btn btn-success me-2 px-4">
+                Zapisz zmiany
+              </button>
+              <button type="button" (click)="isEditMode = false" class="btn btn-secondary px-4">
+                Anuluj
+              </button>
+            </div>
+          </form>
+        </div>
+
+      } @else {
+        @if (post.image) {
+          <div class="text-center post-image-container">
+            <img [src]="post.image" 
+                 class="img-fluid p-3" 
+                 style="max-height: 450px; object-fit: contain;"
+                 alt="Zdjęcie posta">
+          </div>
+        }
+        
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h2 class="card-title fw-bold m-0">{{ post.title }}</h2>
+              <p class="text-muted small mt-1 mb-0">
+                Dodano: {{ post.createdAt | date:'dd.MM.yyyy HH:mm' }}
+              </p>
+            </div>
+
+            <app-like-button [post]="post"></app-like-button>
+          </div>
+          
+          <hr>
+          
+          <p class="card-text lead" style="white-space: pre-wrap; line-height: 1.6;">{{ post.text }}</p>
+
+          <div class="mt-5 d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2">
+              <a routerLink="/blog" class="btn btn-outline-primary px-4">
+                <i class="bi bi-arrow-left me-1"></i> Powrót
+              </a>
+              
+              @if (isOwner) {
+                <button (click)="isEditMode = true" class="btn btn-warning px-4">
+                  <i class="bi bi-pencil me-1"></i> Edytuj
+                </button>
+                <button (click)="deletePost()" class="btn btn-danger px-4">
+                  <i class="bi bi-trash me-1"></i> Usuń
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <comments-section [postId]="id"></comments-section>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="p-5 text-center">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="text-muted">Ładowanie treści posta...</p>
+      </div>
+    }
+  </div>
+</div>

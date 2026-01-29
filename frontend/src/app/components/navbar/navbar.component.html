@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" [routerLink]="['/']">Blog</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @if (authService.isLoggedIn()) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/blog']" routerLinkActive="active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/gallery']" routerLinkActive="active">Galeria</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/favorites']" routerLinkActive="active">Ulubione</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/add-post']" routerLinkActive="active">Dodaj post</a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex align-items-center gap-3"> @if (weatherData) {
+          <div class="d-flex align-items-center border-end pe-3 text-secondary">
+            <div class="text-end me-1">
+              <small class="d-block fw-bold" style="font-size: 0.9rem; line-height: 1;">{{ weatherData.temp }}°C</small>
+              <small style="font-size: 0.75rem;">{{ weatherData.name }}</small>
+            </div>
+            <img 
+              [src]="'https://openweathermap.org/img/wn/' + getWeatherIcon() + '.png'" 
+              alt="weather icon"
+              style="width: 40px; height: 40px;">
+          </div>
+        }
+
+        <app-theme-toggle></app-theme-toggle>
+
+        @if (!authService.isLoggedIn()) {
+          <a class="btn btn-outline-primary" [routerLink]="['/login']">Login</a>
+          <a class="btn btn-primary" [routerLink]="['/signup']">Sign Up</a>
+        } @else {
+          <button class="btn btn-outline-danger" (click)="signOut()">
+            Wyloguj
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

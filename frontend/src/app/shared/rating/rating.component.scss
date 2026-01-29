@@ -1,0 +1,6 @@
+.clickable {
+  cursor: pointer;
+  transition: transform 0.1s;
+  &:hover { transform: scale(1.2); }
+}
+.fa-star, .fa-star-o { margin-right: 2px; }

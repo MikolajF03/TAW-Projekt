@@ -1,0 +1,8 @@
+<button class="btn d-flex align-items-center gap-2 shadow-sm rounded-pill px-3 transition-all"
+        [ngClass]="isLiked() ? 'btn-primary' : 'btn-outline-secondary'"
+        (click)="toggleLike(); $event.stopPropagation()">
+  
+  <i [class]="isLiked() ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"></i>
+  
+  <span class="fw-bold">{{ post?.likes?.length || 0 }}</span>
+</button>

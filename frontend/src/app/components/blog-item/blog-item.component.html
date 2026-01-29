@@ -1,0 +1,28 @@
+<div class="card h-100 shadow-sm position-relative">
+  <div class="position-absolute top-0 end-0 p-2" style="z-index: 10;">
+    <i class="fa fs-4"
+       [ngClass]="{
+         'fa-heart text-danger': favoritesService.isFavorite(post?._id || id), 
+         'fa-heart-o text-white shadow-sm': !favoritesService.isFavorite(post?._id || id)
+       }"
+       (click)="toggleFavorite($event)"
+       style="cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5);">
+    </i>
+  </div>
+
+  <blog-item-image [image]="post?.image || image"></blog-item-image>
+  
+  <div class="card-body d-flex flex-column">
+    <blog-item-text 
+      [title]="post?.title || title" 
+      [text]="post?.text || text" 
+      [id]="post?._id || id">
+    </blog-item-text>
+    
+    <div class="mt-auto pt-3 d-flex justify-content-between align-items-center">
+      <app-rating [postId]="post?._id || id"></app-rating>
+      
+      <app-like-button [post]="post || { _id: id, likes: likes }"></app-like-button>
+    </div>
+  </div>
+</div>

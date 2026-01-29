@@ -1,0 +1,48 @@
+<div class="card p-4 mb-4 shadow-sm border-0">
+    <h4 class="mb-3 text-primary">Dodaj nowy post</h4>
+    
+    <form [formGroup]="postForm" (ngSubmit)="submitPost()" autocomplete="off">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Tytuł posta</label>
+            <input type="text" formControlName="title" class="form-control"
+                [class.is-invalid]="f['title'].touched && f['title'].invalid"
+                placeholder="O czym dzisiaj myślisz?">
+            <div class="invalid-feedback">Tytuł jest wymagany (min. 3 znaki).</div>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="imageSwitch" formControlName="hasCustomImage">
+            <label class="form-check-label" for="imageSwitch">Chcę dodać własne zdjęcie</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Link do obrazka (URL)</label>
+            <input type="text" formControlName="image" class="form-control"
+                [class.is-invalid]="f['image'].enabled && f['image'].touched && f['image'].invalid"
+                placeholder="http://...">
+            
+            <small class="text-muted d-block mt-1" *ngIf="f['image'].disabled" style="opacity: 0.8; color: var(--text-color) !important;">
+                Zostanie użyty obrazek domyślny.
+            </small>
+
+            @if (f['image'].enabled && f['image'].touched && f['image'].invalid) {
+                <div class="invalid-feedback">
+                    @if (f['image'].errors?.['required']) { Proszę podać link. }
+                    @if (f['image'].errors?.['pattern']) { To nie jest poprawny adres URL (musi zaczynać się od http:// lub https://). }
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Treść posta</label>
+            <textarea formControlName="text" class="form-control" rows="4"
+                [class.is-invalid]="f['text'].touched && f['text'].invalid"
+                placeholder="Rozwiń swoją myśl..."></textarea>
+            <div class="invalid-feedback">Treść musi mieć co najmniej 10 znaków.</div>
+        </div>
+
+        <button class="btn btn-success w-100 py-2 fw-bold" [disabled]="postForm.invalid && f['image'].enabled">
+            <i class="fa fa-paper-plane me-2"></i>Opublikuj post
+        </button>
+    </form>
+</div>

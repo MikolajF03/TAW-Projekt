@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card p-4 shadow-sm border-0">
+        <h2 class="mb-4 text-center">Zaloguj się</h2>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="signIn()" autocomplete="off">
+          
+          <div class="mb-3">
+            <label class="form-label font-weight-bold">Adres E-mail</label>
+            <input 
+              type="email" 
+              formControlName="login"
+              class="form-control" 
+              [class.is-invalid]="f['login'].touched && f['login'].invalid"
+              placeholder="np. jan.kowalski@gmail.com">
+            
+            @if (f['login'].touched && f['login'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['login'].errors?.['required']) { Proszę podać adres e-mail. }
+                @if (f['login'].errors?.['email']) { To nie jest poprawny format e-mail. }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label font-weight-bold">Hasło</label>
+            <input 
+              type="password" 
+              formControlName="password"
+              class="form-control" 
+              [class.is-invalid]="f['password'].touched && f['password'].invalid"
+              placeholder="Wprowadź swoje hasło">
+            
+            @if (f['password'].touched && f['password'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['password'].errors?.['required']) { Hasło jest wymagane. }
+                @if (f['password'].errors?.['minlength']) { Hasło musi mieć co najmniej 5 znaków. }
+              </div>
+            }
+          </div>
+
+          @if (loginError) {
+            <div class="alert alert-danger py-2">Błędny e-mail lub hasło.</div>
+          }
+
+          <button 
+            [disabled]="loginForm.invalid" 
+            class="btn btn-primary w-100 mt-3 py-2" 
+            type="submit">
+            Zaloguj
+          </button>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

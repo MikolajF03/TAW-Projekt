@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <div class="row mb-3 g-3 align-items-center">
+    <div class="col-md-6">
+      <app-search-bar (name)="getName($event)"></app-search-bar>
+    </div>
+
+    <div class="col-md-3">
+      <select class="form-select" [value]="currentSort" (change)="onSortChange($event)">
+        <option value="newest">Najnowsze</option>
+        <option value="rating-desc">Najlepiej oceniane</option>
+        <option value="rating-asc">Najgorzej oceniane</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 text-end">
+      <button class="btn btn-success w-100" (click)="refreshPosts()">
+        ↻ Odśwież posty
+      </button>
+    </div>
+  </div>
+
+  <hr>
+
+  <blog 
+    [filterText]="filterText" 
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+  </blog>
+</div>
